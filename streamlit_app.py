@@ -11,7 +11,8 @@ st.write(
 )
 
 # Load the dataset
-file_path = 'BOW-data.xlsx'  # Ensure this path is correct relative to app.py
+# file_path = 'BOW-data.xlsx'
+file_path = 'BOW-data_new.xlsx'
 df = pd.read_excel(file_path)
 
 # Fill missing values in 'translation_lemmatized' with a placeholder
