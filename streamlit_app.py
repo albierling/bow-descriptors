@@ -12,6 +12,9 @@ st.write(
 file_path = 'BOW-data.xlsx'  # Ensure this path is correct relative to app.py
 df = pd.read_excel(file_path)
 
+# Fill missing values in 'translation_lemmatized' with a placeholder
+df['translation_lemmatized'] = df['translation_lemmatized'].fillna('Missing')
+
 # Filtering options
 languages_with_multiple_countries = ['English', 'German', 'Spanish']
 language = st.selectbox("Select Language", languages_with_multiple_countries)
