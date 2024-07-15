@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import pydeck as pdk
 
 # Title and description
 st.title("BOW - A Standardised Lexicon of Body Odour Words")
@@ -88,3 +89,59 @@ ax.set_title('Age Distribution')
 ax.set_xlabel('Age')
 ax.set_ylabel('Frequency')
 st.pyplot(fig)
+
+# Display map with selected countries
+st.write("Map of Selected Countries")
+
+# Mapping country codes to coordinates (latitude and longitude)
+country_coords = {
+    'Germany': [51.1657, 10.4515],
+    'Great-Britain': [55.3781, -3.4360],
+    'Chile': [-35.6751, -71.5430],
+    'Colombia': [4.5709, -74.2973],
+    'Italy': [41.8719, 12.5674],
+    'Poland': [51.9194, 19.1451],
+    'Czech Republic': [49.8175, 15.4730],
+    'Norway': [60.4720, 8.4689],
+    'Finland': [61.9241, 25.7482],
+    'Turkey': [38.9637, 35.2433],
+    'Israel': [31.0461, 34.8516],
+    'Hong Kong': [22.3193, 114.1694],
+    'Vanuatu': [-15.3767, 166.9592],
+    'India': [20.5937, 78.9629]
+}
+
+# Get coordinates for the selected countries
+selected_coords = []
+if language in languages_with_multiple_countries:
+    if "All" not in country:
+        selected_coords = [country_coords[c] for c in country if c in country_coords]
+else:
+    selected_coords = [country_coords[country[0]]]
+
+# Create a DataFrame for the selected coordinates
+map_df = pd.DataFrame(selected_coords, columns=['lat', 'lon'])
+
+# Create a pydeck map
+layer = pdk.Layer(
+    "ScatterplotLayer",
+    map_df,
+    get_position="[lon, lat]",
+    get_radius=500000,
+    get_color=[255, 0, 0],
+    pickable=True
+)
+
+view_state = pdk.ViewState(
+    latitude=20.0,
+    longitude=0.0,
+    zoom=1
+)
+
+map = pdk.Deck(
+    layers=[layer],
+    initial_view_state=view_state,
+    tooltip={"text": "{lat}, {lon}"}
+)
+
+st.pydeck_chart(map)
