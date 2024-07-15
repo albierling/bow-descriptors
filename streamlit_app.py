@@ -16,11 +16,11 @@ languages_with_multiple_countries = ['English', 'German', 'Spanish']
 language = st.selectbox("Select Language", languages_with_multiple_countries)
 
 if language == 'English':
-    countries = ['USA', 'UK', 'AUS']
+    countries = ['GBR', 'CAN', 'SWE']
 elif language == 'German':
-    countries = ['GER', 'AUT', 'SUI']
+    countries = ['DEU', 'AUT']
 elif language == 'Spanish':
-    countries = ['ESP', 'MEX', 'ARG']
+    countries = ['COL', 'CHL']
 else:
     countries = df[df['language'] == language]['country'].unique()
 
