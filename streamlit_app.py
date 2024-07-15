@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # Title and description
 st.title("BOW - A Standardised Lexicon of Body Odour Words")
@@ -16,13 +17,13 @@ languages_with_multiple_countries = ['English', 'German', 'Spanish']
 language = st.selectbox("Select Language", languages_with_multiple_countries)
 
 if language == 'English':
-    countries = ['GBR', 'CAN', 'SWE']
+    countries = df[df['language'] == 'English']['country'].unique()
 elif language == 'German':
-    countries = ['DEU', 'AUT']
+    countries = df[df['language'] == 'German']['country'].unique()
 elif language == 'Spanish':
-    countries = ['COL', 'CHL']
+    countries = df[df['language'] == 'Spanish']['country'].unique()
 else:
-    countries = df[df['language'] == language]['country'].unique()
+    countries = df['country'].unique()
 
 country = st.selectbox("Select Country", countries)
 conditions = st.multiselect("Select Conditions", df['condition'].unique())
@@ -46,9 +47,9 @@ st.dataframe(frequency_df)
 
 # Plotting age distribution
 st.write("Age Distribution")
-plt.figure(figsize=(10, 4))
-plt.hist(filtered_df['age'], bins=20, color='skyblue', edgecolor='black')
-plt.title('Age Distribution')
-plt.xlabel('Age')
-plt.ylabel('Frequency')
-st.pyplot(plt)
+fig, ax = plt.subplots(figsize=(10, 4))
+ax.hist(filtered_df['age'], bins=20, color='skyblue', edgecolor='black')
+ax.set_title('Age Distribution')
+ax.set_xlabel('Age')
+ax.set_ylabel('Frequency')
+st.pyplot(fig)
