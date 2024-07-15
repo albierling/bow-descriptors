@@ -54,9 +54,17 @@ frequency_df['Cumulative Percentage'] = frequency_df['Percentage'].cumsum()
 frequency_df['Percentage'] = frequency_df['Percentage'].round(2)
 frequency_df['Cumulative Percentage'] = frequency_df['Cumulative Percentage'].round(2)
 
+# Style the "Missing" values
+def style_missing(val):
+    if val == 'Missing':
+        return 'color: grey; font-style: italic;'
+    return ''
+
+styled_frequency_df = frequency_df.style.applymap(style_missing, subset=['translation_lemmatized'])
+
 # Display filtered dataset and frequencies without index
 st.write("Word Frequency:")
-st.dataframe(frequency_df.reset_index(drop=True))
+st.dataframe(styled_frequency_df)
 
 # Plotting age distribution
 st.write("Age Distribution")
