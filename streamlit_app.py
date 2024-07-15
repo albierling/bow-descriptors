@@ -41,6 +41,7 @@ if conditions:
 # Calculate frequencies using the lemma column and include lemmatized translation
 frequency_df = filtered_df.groupby(['lemma', 'translation_lemmatized']).size().reset_index(name='Frequency')
 frequency_df['Percentage'] = (frequency_df['Frequency'] / frequency_df['Frequency'].sum()) * 100
+frequency_df['Cumulative Percentage'] = frequency_df['Percentage'].cumsum()
 
 # Sort by frequency
 frequency_df = frequency_df.sort_values(by='Frequency', ascending=False)
