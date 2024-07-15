@@ -45,9 +45,9 @@ frequency_df['Percentage'] = (frequency_df['Frequency'] / frequency_df['Frequenc
 # Sort by frequency
 frequency_df = frequency_df.sort_values(by='Frequency', ascending=False)
 
-# Display filtered dataset and frequencies
+# Display filtered dataset and frequencies without index
 st.write("Word Frequency:")
-st.dataframe(frequency_df)
+st.dataframe(frequency_df.reset_index(drop=True))
 
 # Plotting age distribution
 st.write("Age Distribution")
