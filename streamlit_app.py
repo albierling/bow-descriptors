@@ -28,20 +28,23 @@ if language in languages_with_multiple_countries:
         available_countries = df[df['language'] == 'German']['country'].unique()
     elif language == 'Spanish':
         available_countries = df[df['language'] == 'Spanish']['country'].unique()
+    available_countries = list(available_countries)
+    available_countries.insert(0, "All")
+    country = st.multiselect("Select Country", available_countries, default="All")
 else:
-    available_countries = df[df['language'] == language]['country'].unique()
+    country = df[df['language'] == language]['country'].unique()
+    st.write(f"Country: {country[0]}")
 
-available_countries = list(available_countries)
-available_countries.insert(0, "All")
-
-country = st.multiselect("Select Country", available_countries, default="All")
 conditions = st.multiselect("Select Conditions", df['condition'].unique())
 
 # Filter dataset based on selections
-if "All" in country:
-    filtered_df = df[df['language'] == language]
+if language in languages_with_multiple_countries:
+    if "All" in country:
+        filtered_df = df[df['language'] == language]
+    else:
+        filtered_df = df[(df['country'].isin(country)) & (df['language'] == language)]
 else:
-    filtered_df = df[(df['country'].isin(country)) & (df['language'] == language)]
+    filtered_df = df[(df['country'] == country[0]) & (df['language'] == language)]
 
 if conditions:
     filtered_df = filtered_df[filtered_df['condition'].isin(conditions)]
