@@ -8,7 +8,7 @@ st.write(
 )
 
 # Load the dataset
-file_path = '/mnt/data/BOW-data.xlsx'
+file_path = 'BOW-data.xlsx'
 df = pd.read_excel(file_path)
 
 # Display the dataset
