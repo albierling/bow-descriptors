@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
 import pydeck as pdk
 
 # Title and description
@@ -11,10 +10,11 @@ st.write(
 )
 
 # Load the dataset
-# file_path = 'BOW-data.xlsx'
-# file_path = 'BOW-data_new.xlsx'
-file_path = 'final_df_new_TEST.xlsx'
+file_path = 'BOW-data.xlsx'  # Ensure this path is correct relative to app.py
 df = pd.read_excel(file_path)
+
+# Remove white spaces at the end of entries in the 'lemma' column
+df['lemma'] = df['lemma'].str.strip()
 
 # Fill missing values in 'translation_lemmatized' with a placeholder
 df['translation_lemmatized'] = df['translation_lemmatized'].fillna('Missing')
@@ -172,7 +172,7 @@ if selected_country:
     st.write(f"Number of Participants: {participants[selected_country]}")
     
     # Filter data for the selected country
-    country_df = df[df['country'] == selected_country]
+    country_df = df[df['country'] == selected_country].drop_duplicates(subset=['code'])
     
     # Show gender distribution
     gender_counts = country_df['gender'].value_counts()
