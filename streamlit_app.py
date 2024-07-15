@@ -17,25 +17,29 @@ languages_with_multiple_countries = ['English', 'German', 'Spanish']
 language = st.selectbox("Select Language", languages_with_multiple_countries)
 
 if language == 'English':
-    countries = df[df['language'] == 'English']['country'].unique()
+    available_countries = df[df['language'] == 'English']['country'].unique()
 elif language == 'German':
-    countries = df[df['language'] == 'German']['country'].unique()
+    available_countries = df[df['language'] == 'German']['country'].unique()
 elif language == 'Spanish':
-    countries = df[df['language'] == 'Spanish']['country'].unique()
-else:
-    countries = df['country'].unique()
+    available_countries = df[df['language'] == 'Spanish']['country'].unique()
 
-country = st.selectbox("Select Country", countries)
+available_countries = list(available_countries)
+available_countries.insert(0, "All")
+
+country = st.multiselect("Select Country", available_countries, default="All")
 conditions = st.multiselect("Select Conditions", df['condition'].unique())
 
 # Filter dataset based on selections
-filtered_df = df[(df['country'] == country) & (df['language'] == language)]
+if "All" in country:
+    filtered_df = df[df['language'] == language]
+else:
+    filtered_df = df[(df['country'].isin(country)) & (df['language'] == language)]
+
 if conditions:
     filtered_df = filtered_df[filtered_df['condition'].isin(conditions)]
 
-# Calculate frequencies using the lemma column
-frequency_df = filtered_df['lemma'].value_counts().reset_index()
-frequency_df.columns = ['Description', 'Frequency']
+# Calculate frequencies using the lemma column and include lemmatized translation
+frequency_df = filtered_df.groupby(['lemma', 'translation_lemmatized']).size().reset_index(name='Frequency')
 frequency_df['Percentage'] = (frequency_df['Frequency'] / frequency_df['Frequency'].sum()) * 100
 
 # Sort by frequency
