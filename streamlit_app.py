@@ -47,6 +47,10 @@ frequency_df['Percentage'] = (frequency_df['Frequency'] / total_entries) * 100
 frequency_df = frequency_df.sort_values(by='Frequency', ascending=False)
 frequency_df['Cumulative Percentage'] = frequency_df['Percentage'].cumsum()
 
+# Round the percentage and cumulative percentage to two decimal places
+frequency_df['Percentage'] = frequency_df['Percentage'].round(2)
+frequency_df['Cumulative Percentage'] = frequency_df['Cumulative Percentage'].round(2)
+
 # Display filtered dataset and frequencies without index
 st.write("Word Frequency:")
 st.dataframe(frequency_df.reset_index(drop=True))
