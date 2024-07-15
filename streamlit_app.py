@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.graph_objects as go
 import pydeck as pdk
 
 # Title and description
@@ -173,15 +174,22 @@ if selected_country:
     
     # Show gender distribution
     gender_counts = country_df['gender'].value_counts()
-    fig, ax = plt.subplots()
-    ax.pie(gender_counts.values, labels=gender_counts.index, autopct='%1.1f%%', startangle=90, colors=['skyblue', 'lightgreen'])
-    ax.set_title(f'Gender Distribution in {selected_country}')
-    st.pyplot(fig)
+    gender_pie = px.pie(
+        gender_counts,
+        values=gender_counts.values,
+        names=gender_counts.index,
+        title=f'Gender Distribution in {selected_country}',
+        color_discrete_sequence=px.colors.sequential.Blues
+    )
+    st.plotly_chart(gender_pie)
     
     # Show age distribution
-    fig, ax = plt.subplots(figsize=(10, 4))
-    ax.hist(country_df['age'], bins=20, color='skyblue', edgecolor='black')
-    ax.set_title(f'Age Distribution in {selected_country}')
-    ax.set_xlabel('Age')
-    ax.set_ylabel('Frequency')
-    st.pyplot(fig)
+    age_hist = px.histogram(
+        country_df,
+        x='age',
+        nbins=20,
+        title=f'Age Distribution in {selected_country}',
+        labels={'age': 'Age'},
+        color_discrete_sequence=['skyblue']
+    )
+    st.plotly_chart(age_hist)
