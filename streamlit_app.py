@@ -70,7 +70,7 @@ styled_frequency_df = frequency_df.style.applymap(style_missing, subset=['transl
 
 # Display filtered dataset and frequencies without index
 st.write("Word Frequency:")
-st.write(styled_frequency_df.to_html(index=False), unsafe_allow_html=True)
+st.write(styled_frequency_df.hide(axis='index').to_html(), unsafe_allow_html=True)
 
 # Plotting age distribution
 st.write("Age Distribution")
