@@ -91,7 +91,7 @@ ax.set_ylabel('Frequency')
 st.pyplot(fig)
 
 # Display map with selected countries
-st.write("Map of Selected Countries")
+st.write("Map of All Countries")
 
 # Mapping country codes to coordinates (latitude and longitude)
 country_coords = {
@@ -108,19 +108,40 @@ country_coords = {
     'Israel': [31.0461, 34.8516],
     'Hong Kong': [22.3193, 114.1694],
     'Vanuatu': [-15.3767, 166.9592],
-    'India': [20.5937, 78.9629]
+    'India': [20.5937, 78.9629],
+    'Austria': [47.5162, 14.5501],
+    'United Kingdom': [55.3781, -3.4360],
+    'Canada': [56.1304, -106.3468],
+    'Sweden': [60.1282, 18.6435]
 }
 
-# Get coordinates for the selected countries
-selected_coords = []
-if language in languages_with_multiple_countries:
-    if "All" not in country:
-        selected_coords = [country_coords[c] for c in country if c in country_coords]
-else:
-    selected_coords = [country_coords[country[0]]]
+# Number of participants by country
+participants = {
+    'Germany': 333,
+    'Austria': 189,
+    'Hong Kong': 374,
+    'Israel': 254,
+    'United Kingdom': 60,
+    'Canada': 71,
+    'Sweden': 117,
+    'Chile': 128,
+    'Colombia': 57,
+    'Finland': 174,
+    'Norway': 157,
+    'Czech Republic': 143,
+    'India': 122,
+    'Turkey': 117,
+    'Italy': 116,
+    'Poland': 116,
+    'Vanuatu': 100
+}
 
 # Create a DataFrame for the selected coordinates
-map_df = pd.DataFrame(selected_coords, columns=['lat', 'lon'])
+map_df = pd.DataFrame.from_dict(country_coords, orient='index', columns=['lat', 'lon']).reset_index()
+map_df.columns = ['country', 'lat', 'lon']
+
+# Add number of participants to the DataFrame
+map_df['participants'] = map_df['country'].map(participants)
 
 # Create a pydeck map
 layer = pdk.Layer(
@@ -129,7 +150,8 @@ layer = pdk.Layer(
     get_position="[lon, lat]",
     get_radius=500000,
     get_color=[255, 0, 0],
-    pickable=True
+    pickable=True,
+    auto_highlight=True
 )
 
 view_state = pdk.ViewState(
@@ -141,7 +163,33 @@ view_state = pdk.ViewState(
 map = pdk.Deck(
     layers=[layer],
     initial_view_state=view_state,
-    tooltip={"text": "{lat}, {lon}"}
+    tooltip={"text": "{country}\nParticipants: {participants}"}
 )
 
 st.pydeck_chart(map)
+
+# Show details for the selected country
+selected_country = st.selectbox("Select a country to view details", map_df['country'].unique())
+
+if selected_country:
+    st.write(f"Number of Participants: {participants[selected_country]}")
+    
+    # Filter data for the selected country
+    country_df = df[df['country'] == selected_country]
+    
+    # Show gender distribution
+    gender_counts = country_df['gender'].value_counts()
+    fig, ax = plt.subplots()
+    ax.bar(gender_counts.index, gender_counts.values, color='skyblue')
+    ax.set_title(f'Gender Distribution in {selected_country}')
+    ax.set_xlabel('Gender')
+    ax.set_ylabel('Count')
+    st.pyplot(fig)
+    
+    # Show age distribution
+    fig, ax = plt.subplots(figsize=(10, 4))
+    ax.hist(country_df['age'], bins=20, color='skyblue', edgecolor='black')
+    ax.set_title(f'Age Distribution in {selected_country}')
+    ax.set_xlabel('Age')
+    ax.set_ylabel('Frequency')
+    st.pyplot(fig)
