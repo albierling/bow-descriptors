@@ -81,14 +81,8 @@ styled_frequency_df = frequency_df.style.applymap(style_missing, subset=['transl
 st.write("Word Frequency:")
 st.dataframe(frequency_df.style.applymap(style_missing, subset=['translation_lemmatized']), height=400)
 
-# Plotting age distribution
-st.write("Age Distribution")
-fig, ax = plt.subplots(figsize=(10, 4))
-ax.hist(filtered_df['age'], bins=20, color='skyblue', edgecolor='black')
-ax.set_title('Age Distribution')
-ax.set_xlabel('Age')
-ax.set_ylabel('Frequency')
-st.pyplot(fig)
+# New subheading
+st.subheader("Country Details and Visualizations")
 
 # Display map with selected countries
 st.write("Map of All Countries")
@@ -148,8 +142,8 @@ layer = pdk.Layer(
     "ScatterplotLayer",
     map_df,
     get_position="[lon, lat]",
-    get_radius=500000,
-    get_color=[255, 0, 0],
+    get_radius=200000,
+    get_color=[0, 128, 255],
     pickable=True,
     auto_highlight=True
 )
@@ -180,10 +174,8 @@ if selected_country:
     # Show gender distribution
     gender_counts = country_df['gender'].value_counts()
     fig, ax = plt.subplots()
-    ax.bar(gender_counts.index, gender_counts.values, color='skyblue')
+    ax.pie(gender_counts.values, labels=gender_counts.index, autopct='%1.1f%%', startangle=90, colors=['skyblue', 'lightgreen'])
     ax.set_title(f'Gender Distribution in {selected_country}')
-    ax.set_xlabel('Gender')
-    ax.set_ylabel('Count')
     st.pyplot(fig)
     
     # Show age distribution
