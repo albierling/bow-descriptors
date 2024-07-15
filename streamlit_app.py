@@ -17,14 +17,19 @@ df['translation_lemmatized'] = df['translation_lemmatized'].fillna('Missing')
 
 # Filtering options
 languages_with_multiple_countries = ['English', 'German', 'Spanish']
-language = st.selectbox("Select Language", languages_with_multiple_countries)
+unique_languages = df['language'].unique()
 
-if language == 'English':
-    available_countries = df[df['language'] == 'English']['country'].unique()
-elif language == 'German':
-    available_countries = df[df['language'] == 'German']['country'].unique()
-elif language == 'Spanish':
-    available_countries = df[df['language'] == 'Spanish']['country'].unique()
+language = st.selectbox("Select Language", unique_languages)
+
+if language in languages_with_multiple_countries:
+    if language == 'English':
+        available_countries = df[df['language'] == 'English']['country'].unique()
+    elif language == 'German':
+        available_countries = df[df['language'] == 'German']['country'].unique()
+    elif language == 'Spanish':
+        available_countries = df[df['language'] == 'Spanish']['country'].unique()
+else:
+    available_countries = df[df['language'] == language]['country'].unique()
 
 available_countries = list(available_countries)
 available_countries.insert(0, "All")
