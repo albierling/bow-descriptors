@@ -173,7 +173,7 @@ if selected_country:
     st.write(f"Number of Participants: {participants[selected_country]}")
     
     # Filter data for the selected country
-    country_df = df[df['country'] == selected_country].drop_duplicates(subset=['code'])
+    country_df = df[df['country'] == selected_country].drop_duplicates(subset=['no'])
     
     # Show gender distribution
     gender_counts = country_df['gender'].value_counts()
