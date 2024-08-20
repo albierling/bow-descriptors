@@ -3,15 +3,14 @@ import pandas as pd
 import plotly.express as px
 import pydeck as pdk
 
-# Title and description
 st.title("BOW - A Standardised Lexicon of Body Odour Words")
 st.write(
     "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
 )
 
 # Load the dataset
-#file_path = 'BOW-data.xlsx'  # Ensure this path is correct relative to app.py
-file_path = 'BOW-df.xlsx'  # Ensure this path is correct relative to app.py
+#file_path = 'BOW-data.xlsx' 
+file_path = 'BOW-df.xlsx'
 df = pd.read_excel(file_path)
 
 # Remove white spaces at the end of entries in the 'lemma' column
