@@ -93,7 +93,7 @@ st.write("Map of All Countries")
 # Mapping country codes to coordinates (latitude and longitude)
 country_coords = {
     'Germany': [51.1657, 10.4515],
-    'Great ': [55.3781, -3.4360],
+    'United Kingdom': [55.3781, -3.4360],
     'Chile': [-35.6751, -71.5430],
     'Colombia': [4.5709, -74.2973],
     'Italy': [41.8719, 12.5674],
