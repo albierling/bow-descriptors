@@ -83,7 +83,7 @@ styled_frequency_df = frequency_df.style.applymap(style_missing, subset=['transl
 
 # Display filtered dataset and frequencies without index
 st.write("Word Frequency:")
-st.dataframe(frequency_df.style.applymap(style_missing, subset=['translation_lemmatized']), height=400)
+st.dataframe(frequency_df.style.applymap(style_missing, subset=['translation_lemmatized']), height=400,hide_index=True)
 
 # New subheading
 st.subheader("Country Details and Visualizations")
