@@ -8,7 +8,7 @@ with col1:
     st.text('')
     st.image('blue-Logos-smellodi-01.png', width=170)
 with col2:
-    st.markdown('## BOW - A Standardised Lexicon of Body Odour Words')
+    st.markdown('## A Standardised Lexicon of Body Odour Words')
 
 st.write(
     ""
