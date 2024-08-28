@@ -10,7 +10,8 @@ st.write(
 
 # Load the dataset
 #file_path = 'BOW-data.xlsx' 
-file_path = 'BOW-df.xlsx'
+#file_path = 'BOW-df.xlsx'
+file_path = 'BOW_df_v2.xlsx'
 df = pd.read_excel(file_path)
 
 # Remove white spaces at the end of entries in the 'lemma' column
