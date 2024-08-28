@@ -3,7 +3,13 @@ import pandas as pd
 import plotly.express as px
 import pydeck as pdk
 
-st.title("BOW - A Standardised Lexicon of Body Odour Words")
+col1, col2 = st.columns([0.3, 0.7])
+with col1:
+    st.text('')
+    st.image('blue-Logos-smellodi-01.png', width=170)
+with col2:
+    st.markdown('## BOW - A Standardised Lexicon of Body Odour Words')
+
 st.write(
     ""
 )
