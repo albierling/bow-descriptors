@@ -1,7 +1,14 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
+import os
+from os import path
+
 import plotly.express as px
 import pydeck as pdk
+
+from wordcloud import WordCloud
+from PIL import Image
 
 col1, col2 = st.columns([0.3, 0.7])
 with col1:
@@ -90,6 +97,14 @@ styled_frequency_df = frequency_df.style.applymap(style_missing, subset=['transl
 # Display filtered dataset and frequencies without index
 st.write("Word Frequency:")
 st.dataframe(frequency_df.style.applymap(style_missing, subset=['translation_lemmatized']), height=400,hide_index=True)
+
+# Generate a word cloud image
+d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
+mask = np.array(Image.open(path.join(d, 'mask.png')))
+text = ' '.join(list(frequency_df['lemma'][0:23].values))
+wordcloud = WordCloud(mask=mask, contour_width=3, contour_color='steelblue', background_color='white').generate(text)
+
+st.image(wordcloud.to_array(), use_column_width='always', caption='word cloud')
 
 # New subheading
 st.subheader("Country Details and Visualizations")
