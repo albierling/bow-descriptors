@@ -9,7 +9,9 @@ import pydeck as pdk
 
 from wordcloud import WordCloud
 from PIL import Image
+from matplotlib import font_manager
 
+# Logo and title
 col1, col2 = st.columns([0.3, 0.7])
 with col1:
     st.text('')
@@ -98,11 +100,41 @@ styled_frequency_df = frequency_df.style.applymap(style_missing, subset=['transl
 st.write("Word Frequency:")
 st.dataframe(frequency_df.style.applymap(style_missing, subset=['translation_lemmatized']), height=400,hide_index=True)
 
-# Generate a word cloud image
+# Wordcloud
+st.subheader("Word cloud")
+## select font for word cloud
+try:
+    font_file = font_manager.findfont('Arial Unicode MS')
+except:
+    font_search = font_manager.FontProperties(family='sans-serif', weight='normal')
+    font_file = font_manager.findfont(font_search)
+
+## get number of words for wordcloud
+col1, col2 = st.columns([0.3, 0.7])
+with col1:
+    wc_translated = st.toggle("Use translation")
+
+if wc_translated:
+    max_no = frequency_df['translation_lemmatized'].count()
+else:
+    max_no = frequency_df['lemma'].count()
+
+with col2:
+    wc_no = st.slider("No of words", 1, max_no, 24)
+
+## Generate a word cloud image
 d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
 mask = np.array(Image.open(path.join(d, 'mask.png')))
-text = ' '.join(list(frequency_df['lemma'][0:23].values))
-wordcloud = WordCloud(mask=mask, contour_width=3, contour_color='steelblue', background_color='white').generate(text)
+
+if wc_translated:
+    word_list = list(frequency_df['translation_lemmatized'][0:wc_no-1].values)
+else:
+    word_list = list(frequency_df['lemma'][0:wc_no-1].values)
+
+freq_list = list(frequency_df['Frequency'][0:wc_no-1].values)
+freq_dict = dict(zip(word_list, freq_list))
+
+wordcloud = WordCloud(font_path=font_file, mask=mask, contour_width=3, contour_color='steelblue', background_color='white').generate_from_frequencies(freq_dict) #.generate(text)
 
 st.image(wordcloud.to_array(), use_column_width='always', caption='word cloud')
 
