@@ -4,3 +4,5 @@ openpyxl
 matplotlib
 plotly
 pydeck
+pillow
+wordcloud
