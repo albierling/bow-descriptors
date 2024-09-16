@@ -103,18 +103,20 @@ st.dataframe(frequency_df.style.applymap(style_missing, subset=['translation_lem
 # Wordcloud
 st.subheader("Word cloud")
 
-#flist = font_manager.findSystemFonts(fontpaths=None, fontext='ttf')
-#for fn in flist:
-#    fp = font_manager.FontProperties(fname=fn)
-#    ff = fp.get_family()
-#    st.write(fn + ' ' + str(ff))
+flist = font_manager.findSystemFonts(fontpaths=None, fontext='ttf')
+fn_noto = ''
+for fn in flist:
+    if 'NotoSans-Regular' in fn:
+        fn_noto = fn
+        break
 
 ## select font for word cloud
 try:
     font_file = font_manager.findfont('NotoSans', fallback_to_default=False)
     st.write(font_file)
 except:
-    font_search = font_manager.FontProperties(family='sans-serif', weight='normal')
+#    font_search = font_manager.FontProperties(family='sans-serif', weight='normal')
+    font_search = font_manager.FontProperties(fname=fn_noto, weight='normal')
     font_file = font_manager.findfont(font_search)
     st.write('Default:' + font_file)
     
