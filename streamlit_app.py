@@ -11,6 +11,36 @@ from wordcloud import WordCloud
 from PIL import Image
 from matplotlib import font_manager
 
+
+def select_font(language):
+    # rather hacky way to select the right font
+    noto = 'NotoSans-Regular'
+    if language == 'Chinese':
+        noto = 'NotoSansTC-Regular'
+    elif language == 'Hebrew':
+        noto = 'NotoSansHebrew-Regular'
+    elif language == 'Hindi':
+        noto = 'NotoSansDevanagari-Regular'
+    
+    flist = font_manager.findSystemFonts(fontpaths=None, fontext='ttf')
+    fn_noto = ''
+    for fn in flist:
+        if noto in fn:
+            fn_noto = fn
+            break
+    
+    ## select font for word cloud
+    try:
+        font_file = font_manager.findfont('Arial Unicode MS', fallback_to_default=False)
+        st.write(font_file)
+    except:
+    #    font_search = font_manager.FontProperties(family='sans-serif', weight='normal')
+        font_search = font_manager.FontProperties(fname=fn_noto)
+        font_file = font_manager.findfont(font_search)
+        st.write('Default:' + font_file)
+    
+    return font_file
+
 # Logo and title
 col1, col2 = st.columns([0.3, 0.7])
 with col1:
@@ -102,33 +132,6 @@ st.dataframe(frequency_df.style.applymap(style_missing, subset=['translation_lem
 
 # Wordcloud
 st.subheader("Word cloud")
-
-# rather hacky way to select the right font
-noto = 'NotoSans-Regular'
-if language == 'Chinese':
-#    noto = 'NotoSansTC-Regular'
-elif language == 'Hebrew':
-    noto = 'NotoSansHebrew-Regular'
-elif language == 'Hindi':
-    noto = 'NotoSansDevanagari-Regular'
-
-flist = font_manager.findSystemFonts(fontpaths=None, fontext='ttf')
-fn_noto = ''
-for fn in flist:
-    if noto in fn:
-        fn_noto = fn
-        #break
-    st.write(fn)
-
-## select font for word cloud
-try:
-    font_file = font_manager.findfont('Arial Unicode MS', fallback_to_default=False)
-    st.write(font_file)
-except:
-#    font_search = font_manager.FontProperties(family='sans-serif', weight='normal')
-    font_search = font_manager.FontProperties(fname=fn_noto, weight='normal')
-    font_file = font_manager.findfont(font_search)
-    st.write('Default:' + font_file)
     
 ## get number of words for wordcloud
 col1, col2 = st.columns([0.3, 0.7])
@@ -137,8 +140,10 @@ with col1:
 
 if wc_translated:
     max_no = frequency_df['translation_lemmatized'].count()
+    font_file = select_font('English')
 else:
     max_no = frequency_df['lemma'].count()
+    font_file = select_font(language)
 
 with col2:
     wc_no = st.slider("No of words", 1, max_no, 24)
