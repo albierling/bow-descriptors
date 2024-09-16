@@ -16,7 +16,7 @@ def select_font(language):
     # rather hacky way to select the right font
     noto = 'NotoSans-Regular'
     if language == 'Chinese':
-        noto = 'NotoSansTC-Regular'
+        noto = 'NotoSansCJK-Regular'
     elif language == 'Hebrew':
         noto = 'NotoSansHebrew-Regular'
     elif language == 'Hindi':
