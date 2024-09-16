@@ -103,9 +103,10 @@ st.dataframe(frequency_df.style.applymap(style_missing, subset=['translation_lem
 # Wordcloud
 st.subheader("Word cloud")
 
-#flist = font_manager.findSystemFonts(fontpaths=None, fontext='ttf')
-#for fn in flist:
-#    st.write(fn)
+flist = font_manager.findSystemFonts(fontpaths=None, fontext='ttf')
+for fn in flist:
+    fp = font_manager.FontProperties(fname=fn)
+    st.write(fn + ' ' + fp.get_name())
 
 ## select font for word cloud
 try:
