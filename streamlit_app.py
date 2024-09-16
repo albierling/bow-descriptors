@@ -111,8 +111,9 @@ st.subheader("Word cloud")
 try:
     font_file = font_manager.findfont('Arial Unicode MS')
 except:
-    font_search = font_manager.FontProperties(family='NotoSans', weight='normal')
-    font_file = font_manager.findfont(font_search)
+    #font_search = font_manager.FontProperties(family='NotoSans', weight='normal')
+    #font_file = font_manager.findfont(font_search)
+    font_file = font_manager.findfont('Noto Sans')
 
 st.write(font_file)
     
