@@ -106,9 +106,11 @@ st.subheader("Word cloud")
 try:
     font_file = font_manager.findfont('Arial Unicode MS')
 except:
-    font_search = font_manager.FontProperties(family='sans-serif', weight='normal')
+    font_search = font_manager.FontProperties(family='Noto Sans', weight='normal')
     font_file = font_manager.findfont(font_search)
 
+st.write(font_file)
+    
 ## get number of words for wordcloud
 col1, col2 = st.columns([0.3, 0.7])
 with col1:
