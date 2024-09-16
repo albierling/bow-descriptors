@@ -103,6 +103,7 @@ st.dataframe(frequency_df.style.applymap(style_missing, subset=['translation_lem
 # Wordcloud
 st.subheader("Word cloud")
 
+# rather hacky way to select the right font
 noto = 'NotoSans-Regular'
 if language == 'Chinese':
     noto = 'NotoSansTC-Regular'
@@ -116,7 +117,8 @@ fn_noto = ''
 for fn in flist:
     if noto in fn:
         fn_noto = fn
-        break
+        #break
+    st.write(fn)
 
 ## select font for word cloud
 try:
