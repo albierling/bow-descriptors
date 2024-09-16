@@ -111,12 +111,12 @@ st.subheader("Word cloud")
 
 ## select font for word cloud
 try:
-    font_file = font_manager.findfont('Noto Sans')
+    font_file = font_manager.findfont('NotoSans', fallback_to_default=False)
+    st.write(font_file)
 except:
     font_search = font_manager.FontProperties(family='sans-serif', weight='normal')
     font_file = font_manager.findfont(font_search)
-
-st.write(font_file)
+    st.write('Default:' + font_file)
     
 ## get number of words for wordcloud
 col1, col2 = st.columns([0.3, 0.7])
