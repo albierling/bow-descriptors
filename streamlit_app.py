@@ -106,7 +106,8 @@ st.subheader("Word cloud")
 flist = font_manager.findSystemFonts(fontpaths=None, fontext='ttf')
 for fn in flist:
     fp = font_manager.FontProperties(fname=fn)
-    st.write(fn + ' ' + fp.get_name())
+    ff = fp.get_family()
+    st.write(fn + ' ' + str(ff))
 
 ## select font for word cloud
 try:
