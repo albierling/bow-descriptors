@@ -12,7 +12,7 @@ from PIL import Image
 from matplotlib import font_manager
 
 
-def select_font(language):
+def select_font(language, display_fontfile=False):
     # rather hacky way to select the right font
     noto = 'NotoSans-Regular'
     if language == 'Chinese':
@@ -32,12 +32,13 @@ def select_font(language):
     ## select font for word cloud
     try:
         font_file = font_manager.findfont('Arial Unicode MS', fallback_to_default=False)
-        st.write(font_file)
     except:
     #    font_search = font_manager.FontProperties(family='sans-serif', weight='normal')
         font_search = font_manager.FontProperties(fname=fn_noto)
         font_file = font_manager.findfont(font_search)
-        st.write('Default:' + font_file)
+
+    if display_fontfile:
+        st.write('Font: ' + font_file)
     
     return font_file
 
