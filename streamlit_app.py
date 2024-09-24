@@ -51,8 +51,11 @@ def load_df(df_file):
 
 ###############################################
 # show logo and title
-st.markdown('## A Standardised Lexicon of Body Odour Words')
+st.markdown('## A Standardized Lexicon of Body Odor Words')
 st.sidebar.image('blue-Logos-smellodi-01.png', width=170)
+
+info = st.sidebar.container(border=True)
+info.markdown('Data source: https://osf.io/rpzjk/')
 
 # setup tabs
 tab1, tab2 = st.tabs(["Word frequency", "Demographics"])
@@ -146,7 +149,7 @@ else:
     max_no = frequency_df['lemma'].count()
 
 with col2:
-    wc_no = st.sidebar.slider("No of words", 1, max_no, 24)
+    wc_no = st.sidebar.slider("No of words", 1, max_no, 25)
 
 # Display filtered dataset and frequencies without index
 with tab1:
