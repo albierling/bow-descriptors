@@ -1,3 +1,5 @@
-# BOW - A Standardiszed Lexicon for Body Odor Words
+# BOW - A Standardized Lexicon for Body Odor Words
 
-Access via https://bow-descriptors.streamlit.app/
+Web application for visualization and exporting data from the BOW data set (https://osf.io/rpzjk/).
+
+The web app can be accessed via https://bow-descriptors.streamlit.app/ or used locally.
