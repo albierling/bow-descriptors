@@ -186,7 +186,7 @@ with tab1:
 
     wordcloud = WordCloud(font_path=font_file, mask=mask, contour_width=3, contour_color='steelblue', background_color='white', random_state=42).generate_from_frequencies(freq_dict) #.generate(text)
 
-    st.image(wordcloud.to_array(), use_column_width='always', caption='word cloud')
+    st.image(wordcloud.to_array(), use_container_width='always', caption='word cloud')
 
 
     st.subheader("Word matrix", help='The matrix illustrates the 25 most frequent descriptors for the current choice of language, \
@@ -207,6 +207,9 @@ with tab1:
             n += 1
             if n == wc_no:
                 break
+        else:
+            continue
+        break
 
 # Tab 2
 ## New subheading
