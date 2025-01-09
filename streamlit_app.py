@@ -175,13 +175,13 @@ with tab1:
     mask = np.array(Image.open(path.join(d, 'mask.png')))
 
     if wc_translated:
-        word_list = list(frequency_df['translation_lemmatized'][0:wc_no-1].values)
+        word_list = list(frequency_df['translation_lemmatized'][0:wc_no].values)
         font_file = select_font('English')
     else:
-        word_list = list(frequency_df['lemma'][0:wc_no-1].values)
+        word_list = list(frequency_df['lemma'][0:wc_no].values)
         font_file = select_font(language)
 
-    freq_list = list(frequency_df['Frequency'][0:wc_no-1].values)
+    freq_list = list(frequency_df['Frequency'][0:wc_no].values)
     freq_dict = dict(zip(word_list, freq_list))
 
     wordcloud = WordCloud(font_path=font_file, mask=mask, contour_width=3, contour_color='steelblue', background_color='white', random_state=42).generate_from_frequencies(freq_dict) #.generate(text)
@@ -189,9 +189,9 @@ with tab1:
     st.image(wordcloud.to_array(), use_container_width='always', caption='word cloud')
 
 
-    st.subheader("Word matrix", help='The matrix illustrates the 25 most frequent descriptors for the current choice of language, \
+    st.subheader("Word matrix", help='The matrix illustrates the (max.) 25 most frequent descriptors for the current choice of language, \
                  country and condition(s) as shown in the table above.')
-    word_trans_list = list(frequency_df['translation_lemmatized'][0:wc_no-1].values)
+    word_trans_list = list(frequency_df['translation_lemmatized'][0:wc_no].values)
 
     rows = []
     cols = []
