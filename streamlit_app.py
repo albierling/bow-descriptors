@@ -195,7 +195,7 @@ with tab1:
 
     rows = []
     cols = []
-    col_nos = [4,5,4,5,4,3]
+    col_nos = [4,5,4,5,4,3] # TODO: Support more than 25 words
     for i in range(0,5):
         rows.append(st.columns(col_nos[i]))
 
@@ -205,6 +205,8 @@ with tab1:
             with col:
                 st.button(word_list[n], use_container_width=True, type='primary', help=word_trans_list[n])
             n += 1
+            if n == wc_no:
+                break
 
 # Tab 2
 ## New subheading
