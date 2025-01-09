@@ -203,7 +203,7 @@ with tab1:
     for row in rows:
         for col in row:
             with col:
-                st.button(word_list[n], use_container_width=True, type='primary', help=word_trans_list[n])
+                st.button(word_list[n], key='btn_wc_%i' % n, use_container_width=True, type='primary', help=word_trans_list[n])
             n += 1
             if n == wc_no:
                 break
