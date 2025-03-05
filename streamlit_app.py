@@ -151,6 +151,8 @@ else:
 with col2:
     wc_no = st.sidebar.slider("No of words", 1, max_no, 25)
 
+st.sidebar.write("This research is funded by the European Union.")
+
 # Display filtered dataset and frequencies without index
 with tab1:
     st.subheader("Word frequency", help='In the following table, the descriptors for the chosen language, \
