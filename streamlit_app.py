@@ -151,7 +151,9 @@ else:
 with col2:
     wc_no = st.sidebar.slider("No of words", 1, max_no, 25)
 
-st.sidebar.write("This research is funded by the European Union.")
+st.sidebar.write("This research has been conducted as part of the project Smart Electronic Olfaction for Body Odor Diagnostics (SMELLODI).")
+                 #"and is funded by the European Union.")
+st.sidebar.image('EN-Funded-by-the-EU-NEG-200x42.png', width=170)
 
 # Display filtered dataset and frequencies without index
 with tab1:
